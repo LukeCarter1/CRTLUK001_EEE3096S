@@ -55,9 +55,9 @@ TIM_HandleTypeDef htim16;
 // TODO: Define any input variables xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 //Declared input variables which were used in the various tasks throughout the programm
 static uint8_t patterns[] = {0b10101010, 0b01010101, 0b11001100, 0b00110011, 0b11110000, 0b00001111};
-static uint16_t EEPROM_START = 0x0000;
+static uint16_t addressStart = 0x0000;
 static uint32_t current =0;
-static uint8_t checkState = 1;
+static uint8_t checkState = 0;
 static uint32_t delayNew = 1000;
 static uint8_t lengthArr= (sizeof(patterns)/sizeof(patterns[0]));
 /* USER CODE END PV */
@@ -116,7 +116,7 @@ int main(void)
   // TODO: Write all "patterns" to EEPROM using SPI xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   	 //For loop, writing address form input array
   	  for( uint16_t i = 0; i<lengthArr;i++){
-  		  write_to_address(EEPROM_START+i, patterns[i]);
+  		  write_to_address(addressStart+i, patterns[i]);
 
   	  }
 
@@ -452,9 +452,9 @@ void TIM16_IRQHandler(void)
 	// TODO: Change to next LED pattern; output 0x01 if the read SPI data is incorrect xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
-	uint8_t eeprom = read_from_address(EEPROM_START+current);
+	uint8_t address = read_from_address(addressStart+current);
 	uint8_t pattern = patterns[current];
-	if( eeprom!= pattern){
+	if( address!= pattern){
 		LL_GPIO_WriteOutputPort(GPIOB, 0x01);
 	} else {
 		LL_GPIO_WriteOutputPort(GPIOB,patterns[current]);
