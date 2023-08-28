@@ -53,6 +53,7 @@ TIM_HandleTypeDef htim16;
 
 /* USER CODE BEGIN PV */
 // TODO: Define any input variables xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//Declared input variables which were used in the various tasks throughout the programm
 static uint8_t patterns[] = {0b10101010, 0b01010101, 0b11001100, 0b00110011, 0b11110000, 0b00001111};
 static uint16_t EEPROM_START = 0x0000;
 static uint32_t current =0;
@@ -113,8 +114,8 @@ int main(void)
 
 
   // TODO: Write all "patterns" to EEPROM using SPI xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  	 //For Loop to go through the whole array for writing
-  	  for( uint16_t i = 0; i<sizeof(patterns)/sizeof(patterns[0]);i++){
+  	 //For loop, writing address form input array
+  	  for( uint16_t i = 0; i<lengthArr;i++){
   		  write_to_address(EEPROM_START+i, patterns[i]);
 
   	  }
@@ -131,6 +132,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	// TODO: Check button PA0; if pressed, change timer delay xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	////checks for change in in button state, if change, delay is changed and then called
 	  if(LL_GPIO_IsInputPinSet(Button0_GPIO_Port, Button0_Pin)){
 		  if(checkState){
 			  checkState = !checkState;
