@@ -133,16 +133,16 @@ int main(void)
 
 	// TODO: Check button PA0; if pressed, change timer delay xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 	////checks for change in in button state, if change, delay is changed and then called
-	  if(LL_GPIO_IsInputPinSet(Button0_GPIO_Port, Button0_Pin)){
-		  if(checkState){
-			  checkState = !checkState;
-			  delayNew = 500;
-		  } else {
-			  checkState = !checkState;
+	  if(HAL_GPIO_ReadPin(Button0_GPIO_Port, Button0_Pin)==GPIO_PIN_RESET){
+		  if(checkState==1){
+			  checkState = 0;
 			  delayNew = 1000;
+		  } else {
+			  checkState = 1;
+			  delayNew = 500;
 		  }
 	  }
-	  htim16.Instance->ARR = delayNew;
+	  TIM16->ARR = delayNew-1;
   }
   /* USER CODE END 3 */
 }
