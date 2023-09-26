@@ -368,7 +368,7 @@ void EXTI0_1_IRQHandler(void)
 
 // TODO: Complete the writeLCD function xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 void writeLCD(char *char_in){
-    delay(3000);
+
 	lcd_command(CLEAR);
 	lcd_putstring(char_in);
 }
@@ -376,13 +376,9 @@ void writeLCD(char *char_in){
 // Get ADC value
 uint32_t pollADC(void){
   // TODO: Complete function body to get ADC val xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-	if (HAL_ADC_Start(&hadc) != HAL_OK){
-		Error_Handler();
-	}
 
-	if( HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY) != HAL_OK){
-		Error_Handler();
-	}
+	HAL_ADC_Start(&hadc);
+	HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
 
 	val = HAL_ADC_GetValue(&hadc);
 
